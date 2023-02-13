@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="fragments.html :: headerfiles">
+</head>
+<body>
+	<header th:insert="fragments.html :: nav"></header>
+	<div class="container">
+		<h1 class="display-5">Item Overview</h1>
+
+		<div class="d-flex justify-content-start p-2">
+			<a class="list-group-item mr-2" href="#" th:href="@{/allItems}">All
+				Items</a> 
+			<a class="list-group-item mr-2"	th:each="category : ${categoryList}"
+				th:text="${category.categoryName}" href="#" th:href="@{'/getItems/' + ${category.categoryId}}"></a>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-4" th:each="item : ${itemList}">
+				<div class="card mt-4">
+				
+					<div class="card-body">
+						<h5 th:text="${item.name}" class="card-title"></h5>
+						<p th:text="${item.size}" class="card-text"></p>
+						<p th:text="${item.itemUnit}" class="card-text"></p>
+						<p th:text="${item.brand}" class="card-text"></p>
+						<p th:text="'$ '+${item.price}" class="card-text"></p>
+						<p th:utext="${item.comment}" class="card-text"></p>
+						<a href="#" th:href="@{'~/profile/addToCart/' + ${item.id}}" class="btn btn-primary">AddToCart</a>
+					</div>	
+				</div>
+			</div>
+		</div>
+		
+		<br>
+
+		
+		<div class="contact_form">
+
+		<div class="form">
+
+			<form id="formFilter" th:action="@{/allItems}" method="get">
+				<span>Brand: </span> <input class="form__input" type="text"
+					name="brand" autocomplete="off" tabindex=""
+					id="ais-autocomplete-selectized" placeholder="Filter by brand...">
+
+				<span>Size: </span> <select class="form__input" name="size"
+					id="size">
+					<option value="">NULL</option>
+					<option value="XS">XS</option>
+					<option value="S">S</option>
+					<option value="M">M</option>
+					<option value="L">L</option>
+					<option value="XL">XL</option>
+				</select>
+
+			</form>
+
+			<button class="button" type="submit" form="formFilter">FILTER</button>
+
+		</div>
+	</div>
+
+	</div>
+</body>
+</html>

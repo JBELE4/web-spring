@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="fragments.html :: headerfiles">
+</head>
+<body>
+	<header th:insert="fragments.html :: nav"></header>
+	<div class="container">
+	<h1 class="display-4 my-3">Your Cart Item!</h1>
+		<div class="row">
+			<ul class="list-group col-9">
+				<li class="list-group-item d-flex justify-content-around">
+					<span class="my-auto h6">Item Image</span> 
+					<span class="my-auto h6">Item</span> 
+					<span class="my-auto h6">Price</span> 
+				</li>
+			</ul>
+			<ul class="list-group col-9" th:each="item : ${user.itemList}">
+				<li class="list-group-item d-flex justify-content-around">
+					<span class="my-auto" th:text="${item.name}"></span> 
+					<span class="my-auto" th:text="'$ '+${item.price}"></span>
+				</li>
+			 <a href="#"
+						th:href="@{'/profile/delete-itemcarrito/'+ ${item.id}}"
+						class="btn btn-danger">Delete</a>	
+			</ul>
+			<ul class="list-group col-9">
+				<li class="list-group-item d-flex justify-content-end">
+					<span class="h6" th:text="'Total : '+${total}"></span>
+				</li>
+				<li class="list-group-item d-flex justify-content-end">
+					<a href="#" type="button" class="btn btn-primary">Check Out</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</body>
+</html>

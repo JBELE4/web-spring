@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="fragments.html :: headerfiles">
+</head>
+<body>
+	<header th:insert="fragments.html :: nav"></header>
+	<div class="container">
+	
+		<div class="row my-5">
+			<div class="list-group list-group-flush col-5">
+				<a class="list-group-item list-group-item-action" 
+					href="#" th:href="@{/manager/category-form}">Manage Category</a>
+				<a class="list-group-item list-group-item-action" 
+					href="#" th:href="@{/manager/item-form}">Manage Item</a>
+			</div>
+		</div>
+
+		<table class="table my-5">
+			<thead>
+				<tr>
+					<th scope="col">Id</th>
+					<th scope="col">Item Name</th>
+					<th scope="col">Size</th>
+					<th scope="col">Brand</th>
+					<th scope="col">Price</th>
+					<th scope="col">No. of Unit</th>
+					<th scope="col">Comment</th>		
+					<th scope="col">Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="item : ${itemList}">
+					<th scope="row" th:text="${item.id}"></th>
+					
+					<td th:text="${item.name}"></td>
+					<td th:text="${item.size}"></td>
+					<td th:text="${item.brand}"></td>
+					<td th:text="${item.price}"></td>
+					<td th:text="${item.itemUnit}"></td>
+					<td th:utext="${item.comment}"></td>
+					<td>
+					<a href="#"
+						th:href="@{'/manager/updateItem/'+ ${item.id}}"
+						class="btn btn-danger">Update</a>
+					<a href="#"
+						th:href="@{'/manager/delete-item/'+ ${item.id}}"
+						class="btn btn-danger">Delete</a>
+				</tr>
+			</tbody>
+		</table>
+
+		<div
+			style="width: 600px; margin-left: auto; margin-right: auto; margin-top: 24px; padding: 24px;">
+			<div class="card">
+				<div class="card-block" style="padding: 24px;">
+					<form th:action="@{/manager/add-item}" method="post">
+						<fieldset>
+							<div class="form-group">
+								<select class="custom-select" name="category">
+									<option selected>Select Category</option>
+									<option th:each="category : ${categoryList}" 
+										th:value="${category.categoryId}"
+										th:text="${category.categoryName}"></option>
+								</select>
+							</div>
+							
+							<div class="form-group">
+								<label for="name">Item Name</label> <input type="text"
+									class="form-control" id="name" name="name"
+									placeholder="Item Name">
+							</div>
+							
+							<div class="form-group">
+								<label for="size">Item Size</label> <input type="text"
+									class="form-control" id="size" name="size"
+									placeholder="Item Size">
+							</div>
+							
+							<div class="form-group">
+								<label for="brand">Item Brand</label> <input type="text"
+									class="form-control" id="brand" name="brand"
+									placeholder="Item Brand">
+							</div>
+
+							<div class="form-group">
+								<label for="price">Item Price</label> <input type="number"
+									class="form-control" id="price" name="price"
+									placeholder="Item Price">
+							</div>
+							
+							<div class="form-group">
+								<label for="itemUnit">Item Unit</label> <input type="number"
+									class="form-control" id="itemUnit" name="itemUnit"
+									placeholder="Item Unit">
+							</div>
+							
+							<div class="form-group">
+								<label for="comment">Comment</label> <textarea name="comment" class="form-control editor" id="comment" placeholder="Item Comment">
+								</textarea>
+							</div>
+						
+							<div class="form-actions" style="margin-top: 12px;">
+								<button type="submit" class="btn btn-success">ADD</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+<script src="../fontawesome/js/ckeditor.js"></script>
+<script>ClassicEditor
+			.create( document.querySelector( '.editor' ), {
+				
+				toolbar: {
+					items: [
+						'heading',
+						'|',
+						'bold',
+						'italic',
+						'link',
+						'bulletedList',
+						'numberedList',
+						'|',
+						'outdent',
+						'indent',
+						'|',
+						'imageUpload',
+						'blockQuote',
+						'insertTable',
+						'mediaEmbed',
+						'undo',
+						'redo'
+					]
+				},
+				language: 'en',
+				image: {
+					toolbar: [
+						'imageTextAlternative',
+						'imageStyle:full',
+						'imageStyle:side'
+					]
+				},
+				table: {
+					contentToolbar: [
+						'tableColumn',
+						'tableRow',
+						'mergeTableCells'
+					]
+				},
+				licenseKey: '',
+				
+				
+			} )
+			.then( editor => {
+				window.editor = editor;
+		
+				
+				
+				
+		
+				
+				
+				
+			} )
+			.catch( error => {
+				console.error( 'Oops, something went wrong!' );
+				console.error( 'Please, report the following error on https://github.com/ckeditor/ckeditor5/issues with the build id and the error stack trace:' );
+				console.warn( 'Build id: 4tbxn2t1nghv-nohdljl880ze' );
+				console.error( error );
+			} );
+	</script>
+</html>
